@@ -1,27 +1,5 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
-	import { pb } from '$lib/pocketbase';
-
-	let loggedIn = false;
-
-	onMount(() => {
-		if (!browser) return;
-
-		loggedIn = pb.authStore.isValid;
-		const unsubscribe = pb.authStore.onChange(() => {
-			loggedIn = pb.authStore.isValid;
-		});
-
-		return unsubscribe;
-	});
-
-	const logout = () => {
-		if (!browser) return;
-		pb.authStore.clear();
-		goto('/login');
-	};
+	let { user }: { user: { id: string; email: string } | null } = $props();
 </script>
 
 <div class="navbar sticky top-0 z-20 bg-base-100 shadow-sm">
@@ -80,9 +58,11 @@
 		</ul>
 	</div>
 	<div class="mr-4 navbar-end gap-2">
-		{#if loggedIn}
+		{#if user}
 			<a href="/dashboard" class="btn btn-ghost">Dashboard</a>
-			<button class="btn btn-outline" on:click={logout}>Log Out</button>
+			<form method="POST" action="/logout">
+				<button class="btn btn-outline" type="submit">Log Out</button>
+			</form>
 		{:else}
 			<a href="/login" class="btn btn-ghost">Log In</a>
 			<a href="/signup" class="btn btn-primary">Sign Up</a>
