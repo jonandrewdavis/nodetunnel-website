@@ -2,7 +2,7 @@
 	let { user }: { user: { id: string; email: string } | null } = $props();
 </script>
 
-<div class="navbar sticky top-0 z-20 bg-base-100 shadow-sm">
+<div class="navbar sticky top-9 z-20 bg-base-100 shadow-sm">
 	<div class="navbar-start">
 		<div class="dropdown">
 			<div tabindex="0" role="button" class="btn btn-ghost lg:hidden">

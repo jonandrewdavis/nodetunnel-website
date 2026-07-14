@@ -1,11 +1,9 @@
 # nodetunnel-website
 
-The NodeTunnel marketing site and developer dashboard. Built with SvelteKit and
+The NodeTunnel site to handle signups and appIDs. Built with SvelteKit and
 deployed to **Cloudflare Workers** via [`@sveltejs/adapter-cloudflare`](https://svelte.dev/docs/kit/adapter-cloudflare).
 
-Data lives in **Cloudflare D1** (a single `nodetunnel` database). This replaces
-the former standalone PocketBase `db` repo, which has been folded into this
-project — see [`migrations/`](./migrations) for the schema.
+Data lives in **Cloudflare D1** (a single `nodetunnel` database). See [`migrations/`](./migrations) for the schema.
 
 ## Architecture
 
@@ -18,7 +16,8 @@ project — see [`migrations/`](./migrations) for the schema.
 - **`GET /app-exists/{appId}`** — used by the [relay-server](https://github.com/NodeTunnel/relay-server)
   as its remote whitelist. Requires an `X-Relay-Token` header matching the
   `RELAY_TOKEN` secret; returns `200` if the app exists, `404` if not, `401` on
-  a bad token. This preserves the contract of the old PocketBase `pb_hooks` route.
+  a bad token. 
+
 
 ## Bindings
 
@@ -72,3 +71,10 @@ Then deploy:
 ```sh
 pnpm run deploy
 ```
+
+Restarting (in EC2)
+```
+sudo systemctl restart relay-server
+```
+
+## TODO: Re-do README
