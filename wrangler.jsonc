@@ -1,0 +1,31 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "nodetunnel-website",
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"compatibility_date": "2025-07-13",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	},
+	"observability": {
+		"enabled": true
+	},
+	// D1 database backing the site (users, apps, sessions).
+	// Create it once with `wrangler d1 create nodetunnel` and paste the
+	// returned id below. Local `vite dev` / `wrangler dev` use a local replica
+	// and do not need the real id.
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "nodetunnel",
+			"database_id": "45073184-26b1-4683-9d99-bcccb6f9af6e",
+			"migrations_dir": "migrations"
+		},
+	]
+	// RELAY_TOKEN is a secret consumed by /app-exists. Set it with:
+	//   wrangler secret put RELAY_TOKEN
+	// For local dev put it in .dev.vars (RELAY_TOKEN=...).
+}
